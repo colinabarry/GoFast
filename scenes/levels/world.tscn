@@ -1,0 +1,103 @@
+[gd_scene load_steps=12 format=3 uid="uid://cdu7vuimuhxai"]
+
+[ext_resource type="Script" path="res://scenes/levels/player_movement.gd" id="1_0d7d5"]
+[ext_resource type="Texture2D" uid="uid://cfp0qtug1lkbr" path="res://icon.svg" id="2_gnhqy"]
+[ext_resource type="Script" path="res://scenes/levels/world_tile.gd" id="3_s1h4d"]
+[ext_resource type="Script" path="res://scenes/levels/score_label.gd" id="4_cosfj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7vhnt"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_yncry"]
+sky_material = SubResource("ProceduralSkyMaterial_7vhnt")
+
+[sub_resource type="Environment" id="Environment_cb7j1"]
+background_mode = 2
+sky = SubResource("Sky_yncry")
+tonemap_mode = 3
+glow_enabled = true
+glow_normalized = true
+volumetric_fog_density = 0.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_0xvxs"]
+size = Vector3(1, 1, 0.333)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5brm3"]
+albedo_texture = ExtResource("2_gnhqy")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v2j6i"]
+material = SubResource("StandardMaterial3D_5brm3")
+size = Vector2(30, 300)
+center_offset = Vector3(0, 0, 150)
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cb7j1")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_0d7d5")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 2, -5)
+current = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("SphereShape3D_tlluk")
+
+[node name="MeshContainer" type="Node3D" parent="Player"]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Player/MeshContainer"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_0xvxs")
+skeleton = NodePath("../../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Player/MeshContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70891e-08, 0, 0.309863)
+shadow_enabled = true
+spot_range = 100.0
+spot_angle = 15.2344
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.035, 0)
+mesh = SubResource("PlaneMesh_v2j6i")
+script = ExtResource("3_s1h4d")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 74.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "Score:  "
+
+[node name="Label2" type="Label" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 42
+text = "0"
+script = ExtResource("4_cosfj")
