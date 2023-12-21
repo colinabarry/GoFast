@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://crjrpemp8m0n1"]
+
+[ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_0xvxs"]
+size = Vector3(1, 1, 0.333)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_d0qr0")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 2, -5)
+current = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_tlluk")
+
+[node name="MeshContainer" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_0xvxs")
+skeleton = NodePath("../../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="MeshContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70891e-08, 0, 0.309863)
+shadow_enabled = true
+spot_range = 100.0
+spot_angle = 15.2344
