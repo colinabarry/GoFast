@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwa40tlr48lqh"]
+
+[ext_resource type="Texture2D" uid="uid://cfp0qtug1lkbr" path="res://icon.svg" id="1_3wbmc"]
+
+[node name="MenuButton" type="Button"]
+theme_override_constants/h_separation = 16
+theme_override_constants/icon_max_width = 96
+theme_override_font_sizes/font_size = 40
+text = "Button Text"
+icon = ExtResource("1_3wbmc")
+alignment = 0
