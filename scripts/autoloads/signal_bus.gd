@@ -3,8 +3,11 @@ extends Node
 # Player signals
 signal player_collided
 signal player_died
-signal player_velocity_changed(new_velocity: Vector3)
 signal player_elevation_changed(new_elevation: float)
+signal player_journey_changed(new_journey: float)
+
+# Environment signals
+signal tube_area_entered
 
 # Global signals
 signal score_changed(new_score: float)

@@ -1,15 +1,11 @@
 extends MeshInstance3D
 
-var move_speed := 0.0
+# var move_speed := 0.0
 
 # func _ready():
-# 	SignalBus.player_velocity_changed.connect(on_player_velocity_changed)
+	# SignalBus.player_journey_changed.connect(on_player_journey_changed)
 
 
-func _process(delta):
-	position.z = position.z - Player.world_speed * delta
-	if position.z < -mesh.size.y:
-		position.z = 0
-
-# func on_player_velocity_changed(new_velocity: Vector3) -> void:
-# 	move_speed = new_velocity.z
+# func on_player_journey_changed(new_journey: float) -> void:
+	# if new_journey as int % mesh.size.y:
+		# pass

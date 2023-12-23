@@ -1,15 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://cdu7vuimuhxai"]
+[gd_scene load_steps=14 format=3 uid="uid://cdu7vuimuhxai"]
 
 [ext_resource type="Script" path="res://scenes/levels/world.gd" id="1_atvvt"]
 [ext_resource type="PackedScene" uid="uid://crjrpemp8m0n1" path="res://scenes/prefabs/player.tscn" id="1_l3a72"]
-[ext_resource type="Texture2D" uid="uid://cfp0qtug1lkbr" path="res://icon.svg" id="2_gnhqy"]
 [ext_resource type="Script" path="res://scenes/levels/boundary.gd" id="2_md4pl"]
-[ext_resource type="Script" path="res://scenes/levels/world_tile.gd" id="3_s1h4d"]
+[ext_resource type="PackedScene" uid="uid://c27mom8r7f45w" path="res://scenes/prefabs/environment/tube.tscn" id="4_liugh"]
 [ext_resource type="Script" path="res://scenes/ui/ui_wrangler.gd" id="5_jime8"]
 [ext_resource type="PackedScene" uid="uid://deapt4wltrt7m" path="res://scenes/ui/score_counter.tscn" id="5_jrdra"]
 [ext_resource type="PackedScene" uid="uid://dwa40tlr48lqh" path="res://scenes/ui/components/menu_button.tscn" id="6_qnpta"]
 [ext_resource type="Script" path="res://scenes/ui/pause_menu.gd" id="8_sjnd6"]
 [ext_resource type="Script" path="res://scenes/ui/elevation_label.gd" id="10_d813h"]
+[ext_resource type="Script" path="res://scenes/ui/journey_label.gd" id="11_w2od4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7vhnt"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -26,58 +26,22 @@ glow_enabled = true
 glow_normalized = true
 volumetric_fog_density = 0.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_nv5ka"]
-size = Vector3(100, 1, 300)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5brm3"]
-albedo_texture = ExtResource("2_gnhqy")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_v2j6i"]
-material = SubResource("StandardMaterial3D_5brm3")
-size = Vector2(100, 300)
-center_offset = Vector3(0, 0, 150)
-
 [node name="World" type="Node3D"]
 script = ExtResource("1_atvvt")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cb7j1")
 
-[node name="Player" parent="." instance=ExtResource("1_l3a72")]
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_l3a72")]
+collision_mask = 3
 
-[node name="Boundary" type="RigidBody3D" parent="."]
-freeze = true
+[node name="Boundary" type="Node3D" parent="."]
 script = ExtResource("2_md4pl")
 
-[node name="Collision" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 150)
-shape = SubResource("BoxShape3D_nv5ka")
+[node name="Tube" parent="Boundary" instance=ExtResource("4_liugh")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Collision"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -150)
-mesh = SubResource("PlaneMesh_v2j6i")
-skeleton = NodePath("../../..")
-script = ExtResource("3_s1h4d")
-
-[node name="Collision2" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 450)
-shape = SubResource("BoxShape3D_nv5ka")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Collision2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -150)
-mesh = SubResource("PlaneMesh_v2j6i")
-skeleton = NodePath("../../..")
-script = ExtResource("3_s1h4d")
-
-[node name="Collision3" type="CollisionShape3D" parent="Boundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -150)
-shape = SubResource("BoxShape3D_nv5ka")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Collision3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -150)
-mesh = SubResource("PlaneMesh_v2j6i")
-skeleton = NodePath("../../..")
-script = ExtResource("3_s1h4d")
+[node name="Tube2" parent="Boundary" instance=ExtResource("4_liugh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 900)
 
 [node name="UIWrangler" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -132,13 +96,37 @@ theme_override_constants/margin_bottom = 16
 
 [node name="BoxContainer" type="HBoxContainer" parent="UIWrangler/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 64
 alignment = 1
 
-[node name="Label" type="Label" parent="UIWrangler/MarginContainer/BoxContainer"]
+[node name="Elevation" type="HBoxContainer" parent="UIWrangler/MarginContainer/BoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UIWrangler/MarginContainer/BoxContainer/Elevation"]
 layout_mode = 2
 text = "Elevation:"
 
-[node name="Label2" type="Label" parent="UIWrangler/MarginContainer/BoxContainer"]
+[node name="Label2" type="Label" parent="UIWrangler/MarginContainer/BoxContainer/Elevation"]
 layout_mode = 2
 text = "0"
 script = ExtResource("10_d813h")
+
+[node name="Label3" type="Label" parent="UIWrangler/MarginContainer/BoxContainer/Elevation"]
+layout_mode = 2
+text = "m"
+
+[node name="Journey" type="HBoxContainer" parent="UIWrangler/MarginContainer/BoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UIWrangler/MarginContainer/BoxContainer/Journey"]
+layout_mode = 2
+text = "Journey:"
+
+[node name="Label2" type="Label" parent="UIWrangler/MarginContainer/BoxContainer/Journey"]
+layout_mode = 2
+text = "0"
+script = ExtResource("11_w2od4")
+
+[node name="Label3" type="Label" parent="UIWrangler/MarginContainer/BoxContainer/Journey"]
+layout_mode = 2
+text = "m"
