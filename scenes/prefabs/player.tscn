@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
+margin = 0.1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1j0p"]
 albedo_color = Color(1, 1, 1, 0.376471)
@@ -11,7 +12,10 @@ albedo_color = Color(1, 1, 1, 0.376471)
 material = SubResource("StandardMaterial3D_p1j0p")
 size = Vector3(1, 1, 0.333)
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="RigidBody3D"]
+collision_mask = 3
+lock_rotation = true
+continuous_cd = true
 script = ExtResource("1_d0qr0")
 
 [node name="Camera3D" type="Camera3D" parent="."]

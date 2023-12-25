@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl4x4pluraq3o"]
+
+[ext_resource type="Script" path="res://scenes/ui/elevation_label.gd" id="1_tcsir"]
+[ext_resource type="Script" path="res://scenes/ui/journey_label.gd" id="2_vou0e"]
+
+[node name="StatsCounter" type="MarginContainer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="BoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Elevation" type="HBoxContainer" parent="BoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="BoxContainer/Elevation"]
+layout_mode = 2
+text = "Elevation:"
+
+[node name="Label2" type="Label" parent="BoxContainer/Elevation"]
+layout_mode = 2
+text = "0"
+script = ExtResource("1_tcsir")
+
+[node name="Label3" type="Label" parent="BoxContainer/Elevation"]
+layout_mode = 2
+text = "m"
+
+[node name="Journey" type="HBoxContainer" parent="BoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="BoxContainer/Journey"]
+layout_mode = 2
+text = "Journey:"
+
+[node name="Label2" type="Label" parent="BoxContainer/Journey"]
+layout_mode = 2
+text = "0"
+script = ExtResource("2_vou0e")
+
+[node name="Label3" type="Label" parent="BoxContainer/Journey"]
+layout_mode = 2
+text = "m"

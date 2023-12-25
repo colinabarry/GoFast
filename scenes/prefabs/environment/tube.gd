@@ -15,5 +15,5 @@ func _on_body_entered(body: Node3D) -> void:
 		SignalBus.tube_area_entered.emit()
 
 		var new_tube := duplicate()
-		new_tube.position.z += 300 * 3  # FIXME: BAD MAGIC NUMBER FROM MESH Y SIZE
+		new_tube.position.z += 2000  # FIXME: BAD MAGIC NUMBER FROM MESH Y SIZE
 		get_parent().add_child(new_tube)
