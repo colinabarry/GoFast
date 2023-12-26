@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://crjrpemp8m0n1"]
+[gd_scene load_steps=9 format=3 uid="uid://crjrpemp8m0n1"]
 
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
 
@@ -12,37 +12,81 @@ albedo_color = Color(1, 1, 1, 0.376471)
 material = SubResource("StandardMaterial3D_p1j0p")
 size = Vector3(1, 1, 0.333)
 
-[node name="Player" type="RigidBody3D"]
-collision_mask = 3
-lock_rotation = true
-continuous_cd = true
-script = ExtResource("1_d0qr0")
+[sub_resource type="Animation" id="Animation_qgjgs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 1, -5)
-current = true
+[sub_resource type="Animation" id="Animation_8qghi"]
+resource_name = "dash_left"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(2, 0, 0), Vector3(2, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ei8p7"]
+resource_name = "dash_right"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-2, 0, 0), Vector3(-2, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iqo0l"]
+_data = {
+"RESET": SubResource("Animation_qgjgs"),
+"dash_left": SubResource("Animation_8qghi"),
+"dash_right": SubResource("Animation_ei8p7")
+}
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 3
+script = ExtResource("1_d0qr0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_tlluk")
 
-[node name="MeshContainer" type="Node3D" parent="."]
+[node name="MeshContainer" type="Node3D" parent="CollisionShape3D"]
 unique_name_in_owner = true
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="MeshContainer"]
+[node name="Mesh" type="MeshInstance3D" parent="CollisionShape3D/MeshContainer"]
 transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
 mesh = SubResource("PrismMesh_0xvxs")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="MeshContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70891e-08, 0, 0.309863)
-shadow_enabled = true
-spot_range = 100.0
-spot_angle = 15.2344
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_iqo0l")
+}
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
-target_position = Vector3(0, 0, 0)
-
-[node name="RayCast3D2" type="RayCast3D" parent="."]
-target_position = Vector3(0, 0, 0)
-debug_shape_custom_color = Color(0.733333, 0, 0, 1)
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 1, -5)
+current = true

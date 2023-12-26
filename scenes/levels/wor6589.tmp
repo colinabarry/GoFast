@@ -44,18 +44,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2000)
 process_mode = 3
 script = ExtResource("5_jime8")
 
-[node name="CenterContainer" type="CenterContainer" parent="UIWrangler"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="UIWrangler/CenterContainer"]
-custom_minimum_size = Vector2(128, 72)
-layout_mode = 2
-color = Color(1, 1, 1, 0.364706)
-
 [node name="ScoreCounter" parent="UIWrangler" instance=ExtResource("5_jrdra")]
 
 [node name="PauseMenu" parent="UIWrangler" instance=ExtResource("7_3y68a")]
