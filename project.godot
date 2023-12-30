@@ -11,13 +11,9 @@ config_version=5
 [application]
 
 config/name="GoFast"
-run/main_scene="res://scenes/levels/world.tscn"
+run/main_scene="res://scenes/levels/game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
-
-[aseprite]
-
-import/import_plugin/default_automatic_importer="Static Texture"
 
 [autoload]
 
@@ -37,12 +33,16 @@ window/size/viewport_height=720
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
-mouse_cursor/custom_image="res://assets/sprites/reticle_01_large.png"
+mouse_cursor/custom_image="res://assets/sprites/ui/reticle_01_large.png"
 mouse_cursor/custom_image_hotspot=Vector2(80, 80)
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_tabs/plugin.cfg")
+
+[filesystem]
+
+import/fbx/enabled=false
 
 [input]
 

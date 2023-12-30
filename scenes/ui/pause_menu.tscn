@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://d288ixtejnl2t" path="res://assets/icons/exitRight.png" id="5_83vpa"]
 
 [node name="PauseMenu" type="ColorRect"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

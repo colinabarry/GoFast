@@ -8,4 +8,4 @@ func _process(delta: float) -> void:
 	global_position.y = parent.global_position.y
 	global_position.z = parent.global_position.z
 
-	print(parent.position)
+	# print(parent.position)

@@ -3,8 +3,7 @@ extends Node
 # Player signals
 signal player_collided
 signal player_died
-signal player_elevation_changed(new_elevation: float)
-signal player_journey_changed(new_journey: float)
+signal player_position_changed(new_position: float)
 
 # Environment signals
 signal tube_area_entered
