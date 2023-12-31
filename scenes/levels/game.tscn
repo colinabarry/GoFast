@@ -37,7 +37,7 @@ script = ExtResource("1_4oofb")
 environment = SubResource("Environment_cb7j1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(0.970103, -0.218314, -0.106017, -0.0449067, -0.590761, 0.805596, -0.238504, -0.77675, -0.582902, -2.58896, 50.0502, 0)
+transform = Transform3D(0.618965, 0.587072, 0.521756, 0.31286, -0.793616, 0.521816, 0.720417, -0.159749, -0.674892, -2.58896, 12.353, 6.33465)
 shadow_enabled = true
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_rdnfx")]
