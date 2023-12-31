@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://crjrpemp8m0n1"]
+[gd_scene load_steps=14 format=3 uid="uid://crjrpemp8m0n1"]
 
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
+[ext_resource type="PackedScene" uid="uid://b63embi87dgy2" path="res://scenes/prefabs/trail.tscn" id="2_5dm2c"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
 margin = 0.1
@@ -178,19 +179,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ut5s6")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34ud4"]
-albedo_color = Color(0, 0.854902, 0.854902, 1)
-emission_enabled = true
-emission = Color(1, 2, 2, 1)
-
-[sub_resource type="Curve" id="Curve_hccf1"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.508475, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Gradient" id="Gradient_0p63q"]
-offsets = PackedFloat32Array(0, 0.130435)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
-
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 3
 script = ExtResource("1_d0qr0")
@@ -219,24 +207,12 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 mesh = SubResource("ArrayMesh_dw0bm")
 skeleton = NodePath("")
 
-[node name="TrailRight" type="TrailEmitter" parent="MeshContainer/ShipMesh"]
-material = SubResource("StandardMaterial3D_34ud4")
-curve = SubResource("Curve_hccf1")
-gradient = SubResource("Gradient_0p63q")
-geometry_nodepath = NodePath("..")
-num_points = 10
-noise_scale = 0.1
-size = 0.05
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.267121, 1)
-
-[node name="TrailLeft" type="TrailEmitter" parent="MeshContainer/ShipMesh"]
-material = SubResource("StandardMaterial3D_34ud4")
-curve = SubResource("Curve_hccf1")
-geometry_nodepath = NodePath("..")
-num_points = 10
-noise_scale = 0.1
-size = 0.05
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.267121, 1)
-
 [node name="NoseMarker" type="Marker3D" parent="MeshContainer/ShipMesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7573e-08, 0.293775, -0.887331)
+
+[node name="TrailRight" parent="MeshContainer/ShipMesh" instance=ExtResource("2_5dm2c")]
+visible = true
+
+[node name="TrailLeft" parent="MeshContainer/ShipMesh" instance=ExtResource("2_5dm2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.267, 1)
+visible = true
