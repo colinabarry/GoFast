@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cdu7vuimuhxai"]
+[gd_scene load_steps=13 format=3 uid="uid://cdu7vuimuhxai"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_4oofb"]
 [ext_resource type="PackedScene" uid="uid://crjrpemp8m0n1" path="res://scenes/prefabs/player.tscn" id="2_rdnfx"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://deapt4wltrt7m" path="res://scenes/ui/score_counter.tscn" id="5_6ogyn"]
 [ext_resource type="PackedScene" uid="uid://c7cds454lvf6s" path="res://scenes/ui/pause_menu.tscn" id="6_b76wl"]
 [ext_resource type="PackedScene" uid="uid://dl4x4pluraq3o" path="res://scenes/ui/stats_counter.tscn" id="7_es4u3"]
+[ext_resource type="Script" path="res://scenes/ui/fps_counter.gd" id="9_sxu22"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7vhnt"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,6 +21,10 @@ sky_material = SubResource("ProceduralSkyMaterial_7vhnt")
 background_mode = 2
 sky = SubResource("Sky_yncry")
 tonemap_mode = 3
+ssao_enabled = true
+ssao_radius = 13.73
+ssao_intensity = 9.64
+ssil_enabled = true
 glow_enabled = true
 glow_normalized = true
 glow_intensity = 0.6
@@ -69,3 +74,23 @@ color = Color(1, 1, 1, 0.364706)
 visible = false
 
 [node name="StatsCounter" parent="UIWrangler" instance=ExtResource("7_es4u3")]
+
+[node name="MarginContainer" type="MarginContainer" parent="UIWrangler"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UIWrangler/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UIWrangler/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "FPS: "
+
+[node name="Label2" type="Label" parent="UIWrangler/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+script = ExtResource("9_sxu22")
