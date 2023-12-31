@@ -12,3 +12,8 @@ func cubic_ease_in_out(x: float) -> float:
 		return 1
 
 	return x * x * (3 - 2 * x)
+
+
+## Checks if the difference between two floats is less than or equal to some margin.
+func is_within_margin(a: float, b: float, margin: float) -> bool:
+	return abs(a - b) <= margin

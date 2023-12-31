@@ -28,11 +28,11 @@ gdscript/warnings/return_value_discarded=1
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/window_width_override=1920
 window/size/window_height_override=1080
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 mouse_cursor/custom_image="res://assets/sprites/ui/reticle_01_large.png"
 mouse_cursor/custom_image_hotspot=Vector2(80, 80)
 
