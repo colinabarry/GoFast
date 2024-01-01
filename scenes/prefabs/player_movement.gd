@@ -67,15 +67,14 @@ func _process(delta: float) -> void:
 		velocity.y = lerp(velocity.y, 0.0, 0.1)
 
 	push_vector.z = (look_at_vec.normalized().z * world_speed * delta)
-	print(push_vector)
 
 	velocity += push_vector
 
-	if Input.is_action_just_pressed("move_dash_left"):
-		anim_player.play("dash_left")
+	# if Input.is_action_just_pressed("move_dash_left"):
+	# 	anim_player.play("dash_left")
 
-	if Input.is_action_just_pressed("move_dash_right"):
-		anim_player.play("dash_right")
+	# if Input.is_action_just_pressed("move_dash_right"):
+	# 	anim_player.play("dash_right")
 
 	last_velocity = velocity
 
