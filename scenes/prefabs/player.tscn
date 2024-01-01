@@ -181,6 +181,7 @@ shadow_mesh = SubResource("ArrayMesh_ut5s6")
 
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 3
+motion_mode = 1
 script = ExtResource("1_d0qr0")
 
 [node name="NoseCollision" type="CollisionShape3D" parent="."]
