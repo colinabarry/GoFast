@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 
 	#
 
-	mesh_container.look_at(look_at_vec + position + Vector3(0, 2.5, 0))
+	mesh_container.look_at(look_at_vec + position + Vector3(0, 2, 0))
 	nose_collision.global_position = nose_marker.global_position
 
 	var push_vector := Vector3.ZERO
@@ -61,6 +61,7 @@ func _process(delta: float) -> void:
 
 	if abs(mouse_pos_norm.y) > 0.1:
 		push_vector.y = (look_at_vec.normalized().y * mouse_move_factor * delta)
+		velocity.y += 10 * mouse_pos_norm.y * delta
 		# + mouse_pos_norm.y * mouse_move_factor
 	else:
 		push_vector.y = 0.0
@@ -98,3 +99,6 @@ func _process(delta: float) -> void:
 	if !position.is_equal_approx(last_position):
 		last_position = position
 		SignalBus.player_position_changed.emit(position)
+
+	SignalBus.player_velocity_changed.emit(velocity)
+	SignalBus.max_velocity_changed.emit(Vector3.ONE * max_vel)

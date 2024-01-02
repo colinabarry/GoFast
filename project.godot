@@ -37,10 +37,6 @@ window/vsync/vsync_mode=0
 mouse_cursor/custom_image="res://assets/sprites/ui/reticle_01_large.png"
 mouse_cursor/custom_image_hotspot=Vector2(80, 80)
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot_tabs/plugin.cfg")
-
 [filesystem]
 
 import/fbx/enabled=false
