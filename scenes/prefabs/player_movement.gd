@@ -31,6 +31,10 @@ var push_vector := Vector3.ZERO
 var can_collide := true
 
 
+func _ready() -> void:
+	SignalBus.speed_boost_collected.connect(_on_speed_boost_collected)
+
+
 func _process(delta: float) -> void:
 	mouse_pos = viewport.get_mouse_position()
 	mouse_pos_norm = _get_mouse_pos_norm()
@@ -49,7 +53,7 @@ func _process(delta: float) -> void:
 
 	_handle_collision(delta)
 
-	_handle_max_speed()
+	# _handle_max_speed()
 	_clamp_velocity()
 
 	# if Input.is_action_just_pressed("move_dash_left"):
@@ -91,19 +95,16 @@ func _get_look_at_vec() -> Vector3:
 func _set_push_vector(delta: float) -> void:
 	if abs(mouse_pos_norm.x) > 0.1:
 		push_vector.x = (look_at_vec.normalized().x * mouse_move_factor * delta)
-		# + mouse_pos_norm.x * mouse_move_factor
 	else:
-		push_vector.x = 0.0
-		velocity.x = lerp(velocity.x, 0.0, 0.075)
+		push_vector.x = lerp(push_vector.x, 0.0, 0.5)
+		velocity.x = lerp(velocity.x, 0.0, 0.05)
 
 	if abs(mouse_pos_norm.y) > 0.1:
 		push_vector.y = (look_at_vec.normalized().y * mouse_move_factor * delta)
 		# velocity.y -= 10 * abs(mouse_pos_norm.y) * delta
-		print(mouse_pos_norm.y)
-		# + mouse_pos_norm.y * mouse_move_factor
 	else:
-		push_vector.y = 0.0
-		velocity.y = lerp(velocity.y, 0.0, 0.075)
+		push_vector.y = lerp(push_vector.y, 0.0, 0.5)
+		velocity.y = lerp(velocity.y, 0.0, 0.05)
 
 	push_vector.z = (look_at_vec.normalized().z * world_speed * delta)
 
@@ -134,9 +135,9 @@ func _emit_signals() -> void:
 	SignalBus.current_max_speed_changed.emit(current_max_speed)
 
 
-func _handle_max_speed() -> void:
-	if current_max_speed > base_max_speed:
-		current_max_speed = lerp(current_max_speed, base_max_speed, 0.25)
+# func _handle_max_speed() -> void:
+# 	if current_max_speed > base_max_speed:
+# 		current_max_speed = lerp(current_max_speed, base_max_speed, 1 * get_process_delta_time())
 
 
 func _clamp_velocity() -> void:
@@ -147,5 +148,25 @@ func _clamp_velocity() -> void:
 
 func _on_speed_boost_collected(boost_amount: float) -> void:
 	current_max_speed = base_max_speed + boost_amount
-	var tween := create_tween()
-	# tween.tween_property(self, "velocity",
+	var boosted_velocity := velocity.normalized() * (velocity.length() + boost_amount)
+
+	await (
+		create_tween()
+		. set_ease(Tween.EASE_IN_OUT)
+		. set_trans(Tween.TRANS_CUBIC)
+		. tween_property(self, "velocity", boosted_velocity, 0.25)
+		. finished
+	)
+
+	print("pre")
+	await get_tree().create_timer(1).timeout
+
+	await (
+		create_tween()
+		. set_ease(Tween.EASE_IN_OUT)
+		. set_trans(Tween.TRANS_BACK)
+		. tween_property(self, "current_max_speed", base_max_speed, 2.0)
+		. finished
+	)
+
+	print("tween finished")

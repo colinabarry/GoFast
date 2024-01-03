@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://bymt1dg3scx0t"]
+
+[ext_resource type="Script" path="res://scenes/levels/speed_boost.gd" id="1_6sl6j"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_o3sxv"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gl8c2"]
+transparency = 1
+albedo_color = Color(1, 0.141176, 0.0666667, 0.486275)
+emission = Color(1, 0.0823529, 0.0666667, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_xcwe2"]
+material = SubResource("StandardMaterial3D_gl8c2")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_02q3r"]
+viewport_path = NodePath("SubViewport")
+
+[node name="SpeedBoost" type="Area3D"]
+script = ExtResource("1_6sl6j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_o3sxv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_xcwe2")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1.2, 0.2, 0.1, 1)
+light_energy = 5.0
+shadow_enabled = true
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+billboard = 1
+double_sided = false
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture = SubResource("ViewportTexture_02q3r")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(64, 32)
+
+[node name="Label" type="Label" parent="SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = ">>>"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
