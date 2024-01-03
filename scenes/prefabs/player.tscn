@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://crjrpemp8m0n1"]
+[gd_scene load_steps=15 format=3 uid="uid://crjrpemp8m0n1"]
 
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
 [ext_resource type="PackedScene" uid="uid://b63embi87dgy2" path="res://scenes/prefabs/trail.tscn" id="2_5dm2c"]
+[ext_resource type="Script" path="res://scenes/prefabs/follow_camera.gd" id="2_g5jwr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
 margin = 0.1
@@ -196,8 +197,9 @@ libraries = {
 }
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 1.5, -5)
+transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 1.5, -1.5)
 current = true
+script = ExtResource("2_g5jwr")
 
 [node name="MeshContainer" type="Node3D" parent="."]
 unique_name_in_owner = true

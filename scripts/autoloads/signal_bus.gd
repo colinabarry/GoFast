@@ -6,6 +6,8 @@ signal player_died
 signal player_position_changed(new_position: Vector3)
 signal player_velocity_changed(new_velocity: Vector3)
 signal max_velocity_changed(new_max_velocity: Vector3)
+signal base_max_speed_changed(new_base_max_speed: float)
+signal current_max_speed_changed(new_current_max_speed: float)
 
 # Environment signals
 signal tube_area_entered
@@ -13,7 +15,8 @@ signal tube_area_entered
 # Global signals
 signal score_changed(new_score: float)
 signal score_multiplier_changed(new_score_multiplier: float)
-signal item_collected
+signal speed_boost_collected(boost_amount: float)
+# signal item_collected
 signal game_paused
 signal game_resumed
 
