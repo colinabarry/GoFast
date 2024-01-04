@@ -91,33 +91,18 @@ func _get_look_at_vec() -> Vector3:
 # TODO: Refactor this for clarity
 ## This function sets the push vector based on look at vec, and also lerps velocity x and y to 0 when mouse is in the "dead zone"
 func _set_push_vector_and_implement_dead_zone(delta: float) -> void:
-	# if abs(mouse_pos_norm.x) > 0.1:
-	# 	push_vector.x = (look_at_vec.normalized().x * mouse_move_factor * delta)
-	# else:
-	# 	push_vector.x = lerp(push_vector.x, 0.0, 0.5)
-	# 	velocity.x = lerp(velocity.x, 0.0, 0.05)
-
-	# if abs(mouse_pos_norm.y) > 0.1:
-	# 	push_vector.y = (look_at_vec.normalized().y * mouse_move_factor * delta)
-	# 	# velocity.y -= 10 * abs(mouse_pos_norm.y) * delta
-	# else:
-	# 	push_vector.y = lerp(push_vector.y, 0.0, 0.5)
-	# 	velocity.y = lerp(velocity.y, 0.0, 0.05)
-
-	# push_vector.z = (look_at_vec.normalized().z * world_speed * delta)
-
-	if abs(mouse_pos_norm.x) < 0.1:
-		look_at_vec.x = lerp(look_at_vec.x, 0.0, 0.5)
-		velocity.x = lerp(velocity.x, 0.0, 0.05)
-
-	if abs(mouse_pos_norm.y) < 0.1:
-		look_at_vec.y = lerp(look_at_vec.y, 0.0, 0.5)
-		velocity.y = lerp(velocity.y, 0.0, 0.05)
-
 	push_vector = look_at_vec.normalized()
 	push_vector.x *= mouse_move_factor * 1.25 * delta
 	push_vector.y *= mouse_move_factor * delta
 	push_vector.z *= world_speed * delta
+
+	if abs(mouse_pos_norm.x) <= 0.1:
+		push_vector.x = lerp(push_vector.x, 0.0, 0.5)
+		velocity.x = lerp(velocity.x, 0.0, 0.05)
+
+	if abs(mouse_pos_norm.y) <= 0.1:
+		push_vector.y = lerp(push_vector.y, 0.0, 0.5)
+		velocity.y = lerp(velocity.y, 0.0, 0.05)
 
 
 func _handle_collision(collision: KinematicCollision3D) -> void:
