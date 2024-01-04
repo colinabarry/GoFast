@@ -13,8 +13,6 @@ const mouse_move_factor := 25
 
 var world_speed := 5.0
 
-# var max_accel := 250
-# var max_vel := 50.0
 var base_max_speed := 50.0
 var current_max_speed := base_max_speed
 
@@ -29,6 +27,7 @@ var look_at_vec := Vector3.ZERO
 var push_vector := Vector3.ZERO
 
 var can_collide := true
+var is_boosting := false
 
 
 func _ready() -> void:
@@ -45,15 +44,15 @@ func _process(delta: float) -> void:
 	mesh_container.look_at(look_at_vec + position + Vector3(0, 2, 0))
 	nose_collision.global_position = nose_marker.global_position
 
-	_set_push_vector(delta)
+	_set_push_vector_and_implement_dead_zone(delta)
 
 	velocity += push_vector
-	# _clamp_velocity()
 	last_velocity = velocity
 
-	_handle_collision(delta)
+	var collision := move_and_collide(velocity * delta)
+	if collision:
+		_handle_collision(collision)
 
-	# _handle_max_speed()
 	_clamp_velocity()
 
 	# if Input.is_action_just_pressed("move_dash_left"):
@@ -90,28 +89,38 @@ func _get_look_at_vec() -> Vector3:
 
 
 # TODO: Refactor this for clarity
-## Slight misnomer due to laziness.
 ## This function sets the push vector based on look at vec, and also lerps velocity x and y to 0 when mouse is in the "dead zone"
-func _set_push_vector(delta: float) -> void:
-	if abs(mouse_pos_norm.x) > 0.1:
-		push_vector.x = (look_at_vec.normalized().x * mouse_move_factor * delta)
-	else:
-		push_vector.x = lerp(push_vector.x, 0.0, 0.5)
+func _set_push_vector_and_implement_dead_zone(delta: float) -> void:
+	# if abs(mouse_pos_norm.x) > 0.1:
+	# 	push_vector.x = (look_at_vec.normalized().x * mouse_move_factor * delta)
+	# else:
+	# 	push_vector.x = lerp(push_vector.x, 0.0, 0.5)
+	# 	velocity.x = lerp(velocity.x, 0.0, 0.05)
+
+	# if abs(mouse_pos_norm.y) > 0.1:
+	# 	push_vector.y = (look_at_vec.normalized().y * mouse_move_factor * delta)
+	# 	# velocity.y -= 10 * abs(mouse_pos_norm.y) * delta
+	# else:
+	# 	push_vector.y = lerp(push_vector.y, 0.0, 0.5)
+	# 	velocity.y = lerp(velocity.y, 0.0, 0.05)
+
+	# push_vector.z = (look_at_vec.normalized().z * world_speed * delta)
+
+	if abs(mouse_pos_norm.x) < 0.1:
+		look_at_vec.x = lerp(look_at_vec.x, 0.0, 0.5)
 		velocity.x = lerp(velocity.x, 0.0, 0.05)
 
-	if abs(mouse_pos_norm.y) > 0.1:
-		push_vector.y = (look_at_vec.normalized().y * mouse_move_factor * delta)
-		# velocity.y -= 10 * abs(mouse_pos_norm.y) * delta
-	else:
-		push_vector.y = lerp(push_vector.y, 0.0, 0.5)
+	if abs(mouse_pos_norm.y) < 0.1:
+		look_at_vec.y = lerp(look_at_vec.y, 0.0, 0.5)
 		velocity.y = lerp(velocity.y, 0.0, 0.05)
 
-	push_vector.z = (look_at_vec.normalized().z * world_speed * delta)
+	push_vector = look_at_vec.normalized()
+	push_vector.x *= mouse_move_factor * 1.25 * delta
+	push_vector.y *= mouse_move_factor * delta
+	push_vector.z *= world_speed * delta
 
 
-func _handle_collision(delta: float) -> void:
-	var collision := move_and_collide(velocity * delta)
-
+func _handle_collision(collision: KinematicCollision3D) -> void:
 	if can_collide and collision:
 		SignalBus.player_collided.emit()
 		can_collide = false
@@ -147,6 +156,11 @@ func _clamp_velocity() -> void:
 
 
 func _on_speed_boost_collected(boost_amount: float) -> void:
+	if is_boosting:
+		return
+
+	is_boosting = true
+
 	current_max_speed = base_max_speed + boost_amount
 	var boosted_velocity := velocity.normalized() * (velocity.length() + boost_amount)
 
@@ -170,3 +184,4 @@ func _on_speed_boost_collected(boost_amount: float) -> void:
 	)
 
 	print("tween finished")
+	is_boosting = false

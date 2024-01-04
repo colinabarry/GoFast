@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://crjrpemp8m0n1"]
+[gd_scene load_steps=17 format=3 uid="uid://crjrpemp8m0n1"]
 
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
 [ext_resource type="PackedScene" uid="uid://b63embi87dgy2" path="res://scenes/prefabs/trail.tscn" id="2_5dm2c"]
@@ -180,15 +180,23 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ut5s6")
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_0kwg4"]
+radius = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rxrlc"]
+radius = 0.05
+
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_d0qr0")
 
 [node name="NoseCollision" type="CollisionShape3D" parent="."]
+visible = false
 shape = SubResource("SphereShape3D_tlluk")
+disabled = true
 
-[node name="NoseCollision2" type="CollisionShape3D" parent="."]
+[node name="CoreCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_tlluk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -199,11 +207,12 @@ libraries = {
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 1.5, -1.5)
 current = true
+fov = 70.0
 script = ExtResource("2_g5jwr")
 
 [node name="MeshContainer" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.177497, 0)
 
 [node name="ShipMesh" type="MeshInstance3D" parent="MeshContainer"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
@@ -219,3 +228,21 @@ visible = true
 [node name="TrailLeft" parent="MeshContainer/ShipMesh" instance=ExtResource("2_5dm2c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.267, 1)
 visible = true
+
+[node name="NoseArea" type="Area3D" parent="MeshContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.78368e-08, 0.159683, -0.432803)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/NoseArea"]
+shape = SubResource("SphereShape3D_0kwg4")
+
+[node name="LeftWingArea" type="Area3D" parent="MeshContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.442, 0.088, 0.221)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/LeftWingArea"]
+shape = SubResource("SphereShape3D_rxrlc")
+
+[node name="RightWingArea" type="Area3D" parent="MeshContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.442, 0.088, 0.221)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/RightWingArea"]
+shape = SubResource("SphereShape3D_rxrlc")

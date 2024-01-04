@@ -39,7 +39,7 @@ transform = Transform3D(0.619731, 0.585578, 0.522525, 0.31316, -0.795003, 0.5195
 shadow_enabled = true
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_rdnfx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0355, 5.52017, -6.16116)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.9871, 0.603879, -6.16116)
 
 [node name="World" type="Node3D" parent="."]
 script = ExtResource("3_2aell")
