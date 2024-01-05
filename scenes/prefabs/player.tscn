@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://crjrpemp8m0n1"]
+[gd_scene load_steps=24 format=3 uid="uid://crjrpemp8m0n1"]
 
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
 [ext_resource type="PackedScene" uid="uid://b63embi87dgy2" path="res://scenes/prefabs/trail.tscn" id="2_5dm2c"]
 [ext_resource type="Script" path="res://scenes/prefabs/follow_camera.gd" id="2_g5jwr"]
+[ext_resource type="Script" path="res://scenes/prefabs/damage_area.gd" id="4_t1wwx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
 margin = 0.1
@@ -193,9 +194,6 @@ emission = Color(1.5, 2.5, 2.5, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_0kwg4"]
 radius = 0.1
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_rxrlc"]
-radius = 0.05
-
 [sub_resource type="Gradient" id="Gradient_ah6tn"]
 interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.502488, 1)
@@ -215,6 +213,9 @@ cull_mode = 2
 albedo_color = Color(0.435294, 0.435294, 0.435294, 1)
 albedo_texture = SubResource("NoiseTexture2D_uhowo")
 emission = Color(1.5, 2.5, 2.5, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rxrlc"]
+radius = 0.05
 
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 3
@@ -264,12 +265,24 @@ visible = true
 
 [node name="NoseArea" type="Area3D" parent="MeshContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.78368e-08, 0.159683, -0.432803)
+script = ExtResource("4_t1wwx")
+damage_points = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/NoseArea"]
 shape = SubResource("SphereShape3D_0kwg4")
 
+[node name="TrailRight3" parent="MeshContainer/NoseArea" instance=ExtResource("2_5dm2c")]
+material = SubResource("StandardMaterial3D_rckwr")
+geometry_nodepath = NodePath("../../ShipMesh")
+noise_scale = 0.25
+size = 0.2
+update_interval = 0.01
+transform = Transform3D(0.298997, 0, -1.77636e-15, 0, 0.298997, 0, 1.77636e-15, 0, 0.298997, 0.0029684, 0.0686383, -0.0300182)
+visible = true
+
 [node name="LeftWingArea" type="Area3D" parent="MeshContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.442, 0.088, 0.221)
+script = ExtResource("4_t1wwx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/LeftWingArea"]
 shape = SubResource("SphereShape3D_rxrlc")
@@ -284,6 +297,7 @@ visible = true
 
 [node name="RightWingArea" type="Area3D" parent="MeshContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.442, 0.088, 0.221)
+script = ExtResource("4_t1wwx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/RightWingArea"]
 shape = SubResource("SphereShape3D_rxrlc")
