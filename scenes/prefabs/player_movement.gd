@@ -8,7 +8,6 @@ const mouse_move_factor := 25
 @onready var mesh_container := %MeshContainer as Node3D
 @onready var anim_player := $AnimationPlayer as AnimationPlayer
 
-@onready var nose_collision := $NoseCollision as CollisionShape3D
 @onready var nose_marker := $MeshContainer/ShipMesh/NoseMarker as Marker3D
 
 var world_speed := 5.0
@@ -42,7 +41,6 @@ func _process(delta: float) -> void:
 	#
 
 	mesh_container.look_at(look_at_vec + position + Vector3(0, 2, 0))
-	nose_collision.global_position = nose_marker.global_position
 
 	_set_push_vector_and_implement_dead_zone(delta)
 
@@ -52,6 +50,10 @@ func _process(delta: float) -> void:
 	var collision := move_and_collide(velocity * delta)
 	if collision:
 		_handle_collision(collision)
+
+	# var collided := move_and_slide()
+	# if collided:
+	# 	_handle_collision(get_last_slide_collision())
 
 	_clamp_velocity()
 

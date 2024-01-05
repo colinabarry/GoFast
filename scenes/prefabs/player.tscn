@@ -1,9 +1,18 @@
-[gd_scene load_steps=24 format=3 uid="uid://crjrpemp8m0n1"]
+[gd_scene load_steps=26 format=3 uid="uid://crjrpemp8m0n1"]
 
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
 [ext_resource type="PackedScene" uid="uid://b63embi87dgy2" path="res://scenes/prefabs/trail.tscn" id="2_5dm2c"]
 [ext_resource type="Script" path="res://scenes/prefabs/follow_camera.gd" id="2_g5jwr"]
 [ext_resource type="Script" path="res://scenes/prefabs/damage_area.gd" id="4_t1wwx"]
+[ext_resource type="Script" path="res://scenes/prefabs/player_audio.gd" id="5_thqj7"]
+[ext_resource type="AudioStream" uid="uid://bmc83sybhu7ms" path="res://assets/audio/sfx/engine_sound_loop_v2.wav" id="6_hd21x"]
+[ext_resource type="AudioStream" uid="uid://bj140bot17glr" path="res://assets/audio/sfx/CarHornHonk_BW.62180.wav" id="7_3ygq6"]
+[ext_resource type="AudioStream" uid="uid://f4m6lny3vp2u" path="res://assets/audio/sfx/ESM_GB_fx_foley_one_shot_rockbrk_mining_rocks_heavy_01_impact_destroy_material.wav" id="8_5dlm7"]
+[ext_resource type="AudioStream" uid="uid://diexrtus6tai5" path="res://assets/audio/sfx/ExplosionBlast_S08WA.111.wav" id="9_ng7t2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ytlo6"]
+radius = 0.12602
+height = 0.927059
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
 margin = 0.1
@@ -14,7 +23,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("NoseCollision:position")
+tracks/0/path = NodePath("WingCollision:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -30,7 +39,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("NoseCollision:position")
+tracks/0/path = NodePath("WingCollision:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -46,7 +55,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("NoseCollision:position")
+tracks/0/path = NodePath("WingCollision:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -194,26 +203,6 @@ emission = Color(1.5, 2.5, 2.5, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_0kwg4"]
 radius = 0.1
 
-[sub_resource type="Gradient" id="Gradient_ah6tn"]
-interpolation_mode = 2
-offsets = PackedFloat32Array(0, 0.502488, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0.98081, 0.98081, 0.98081, 0.98081, 1, 1, 1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0rkls"]
-frequency = 0.0085
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uhowo"]
-color_ramp = SubResource("Gradient_ah6tn")
-noise = SubResource("FastNoiseLite_0rkls")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rckwr"]
-transparency = 1
-blend_mode = 1
-cull_mode = 2
-albedo_color = Color(0.435294, 0.435294, 0.435294, 1)
-albedo_texture = SubResource("NoiseTexture2D_uhowo")
-emission = Color(1.5, 2.5, 2.5, 1)
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_rxrlc"]
 radius = 0.05
 
@@ -222,9 +211,9 @@ collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_d0qr0")
 
-[node name="NoseCollision" type="CollisionShape3D" parent="."]
-visible = false
-shape = SubResource("SphereShape3D_tlluk")
+[node name="WingCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_ytlo6")
 disabled = true
 
 [node name="CoreCollision" type="CollisionShape3D" parent="."]
@@ -271,29 +260,12 @@ damage_points = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/NoseArea"]
 shape = SubResource("SphereShape3D_0kwg4")
 
-[node name="TrailRight3" parent="MeshContainer/NoseArea" instance=ExtResource("2_5dm2c")]
-material = SubResource("StandardMaterial3D_rckwr")
-geometry_nodepath = NodePath("../../ShipMesh")
-noise_scale = 0.25
-size = 0.2
-update_interval = 0.01
-transform = Transform3D(0.298997, 0, -1.77636e-15, 0, 0.298997, 0, 1.77636e-15, 0, 0.298997, 0.0029684, 0.0686383, -0.0300182)
-visible = true
-
 [node name="LeftWingArea" type="Area3D" parent="MeshContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.442, 0.088, 0.221)
 script = ExtResource("4_t1wwx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/LeftWingArea"]
 shape = SubResource("SphereShape3D_rxrlc")
-
-[node name="TrailRight3" parent="MeshContainer/LeftWingArea" instance=ExtResource("2_5dm2c")]
-material = SubResource("StandardMaterial3D_rckwr")
-geometry_nodepath = NodePath("../../ShipMesh")
-noise_scale = 0.25
-size = 0.2
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.0563304, -0.010227, 0.0181691)
-visible = true
 
 [node name="RightWingArea" type="Area3D" parent="MeshContainer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.442, 0.088, 0.221)
@@ -302,11 +274,9 @@ script = ExtResource("4_t1wwx")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshContainer/RightWingArea"]
 shape = SubResource("SphereShape3D_rxrlc")
 
-[node name="TrailRight2" parent="MeshContainer/RightWingArea" instance=ExtResource("2_5dm2c")]
-material = SubResource("StandardMaterial3D_rckwr")
-geometry_nodepath = NodePath("../../ShipMesh")
-noise_scale = 0.25
-size = 0.2
-update_interval = 0.01
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0436542, -0.010227, 0.019171)
-visible = true
+[node name="PlayerAudio" type="Node3D" parent="."]
+script = ExtResource("5_thqj7")
+engine_sound = ExtResource("6_hd21x")
+horn_sound = ExtResource("7_3ygq6")
+collision_sound = ExtResource("8_5dlm7")
+death_sound = ExtResource("9_ng7t2")
