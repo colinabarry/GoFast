@@ -7,7 +7,7 @@ radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gl8c2"]
 transparency = 1
-albedo_color = Color(1, 0.141176, 0.0666667, 0.486275)
+albedo_color = Color(0.937255, 0.0745098, 0, 0.623529)
 emission = Color(1, 0.0823529, 0.0666667, 1)
 emission_energy_multiplier = 5.0
 
@@ -29,9 +29,10 @@ shape = SubResource("SphereShape3D_o3sxv")
 mesh = SubResource("SphereMesh_xcwe2")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_color = Color(1.2, 0.2, 0.1, 1)
+light_color = Color(0.960784, 0, 0.0784314, 1)
 light_energy = 5.0
 shadow_enabled = true
+omni_range = 25.0
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 billboard = 1

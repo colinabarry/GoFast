@@ -155,7 +155,7 @@ func _on_speed_boost_collected(boost_amount: float) -> void:
 		create_tween()
 		. set_ease(Tween.EASE_IN_OUT)
 		. set_trans(Tween.TRANS_CUBIC)
-		. tween_property(self, "velocity", boosted_velocity, 0.25)
+		. tween_property(self, "velocity", boosted_velocity, 0.5)
 		. finished
 	)
 
