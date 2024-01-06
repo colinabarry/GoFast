@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://crjrpemp8m0n1"]
+[gd_scene load_steps=25 format=3 uid="uid://crjrpemp8m0n1"]
 
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
 [ext_resource type="PackedScene" uid="uid://b63embi87dgy2" path="res://scenes/prefabs/trail.tscn" id="2_5dm2c"]
@@ -11,8 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://diexrtus6tai5" path="res://assets/audio/sfx/ExplosionBlast_S08WA.111.wav" id="9_ng7t2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ytlo6"]
-radius = 0.12602
-height = 0.927059
+radius = 0.07769
+height = 0.864781
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
 margin = 0.1
@@ -193,12 +193,8 @@ shadow_mesh = SubResource("ArrayMesh_ut5s6")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_is37l"]
 albedo_color = Color(0, 0.854902, 0.854902, 1)
 emission_enabled = true
-emission = Color(1.5, 2.5, 2.5, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ph35"]
-albedo_color = Color(0, 0.854902, 0.854902, 1)
-emission_enabled = true
-emission = Color(1.5, 2.5, 2.5, 1)
+emission = Color(0, 0.67451, 0.803922, 1)
+emission_energy_multiplier = 4.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0kwg4"]
 radius = 0.1
@@ -206,7 +202,7 @@ radius = 0.1
 [sub_resource type="SphereShape3D" id="SphereShape3D_rxrlc"]
 radius = 0.05
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_d0qr0")
@@ -214,10 +210,15 @@ script = ExtResource("1_d0qr0")
 [node name="WingCollision" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ytlo6")
-disabled = true
+
+[node name="BodyCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, -0.0144368, 0.0407839)
+shape = SubResource("CapsuleShape3D_ytlo6")
 
 [node name="CoreCollision" type="CollisionShape3D" parent="."]
+visible = false
 shape = SubResource("SphereShape3D_tlluk")
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -248,7 +249,7 @@ material = SubResource("StandardMaterial3D_is37l")
 visible = true
 
 [node name="TrailLeft" parent="MeshContainer/ShipMesh" instance=ExtResource("2_5dm2c")]
-material = SubResource("StandardMaterial3D_6ph35")
+material = SubResource("StandardMaterial3D_is37l")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.267, 1)
 visible = true
 

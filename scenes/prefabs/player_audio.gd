@@ -15,6 +15,7 @@ var base_max_speed := 0.0
 
 func _ready() -> void:
 	engine_sound_player.stream = engine_sound
+	engine_sound_player.bus = "SFX_Engine"
 	add_child(engine_sound_player)
 
 	add_child(horn_sound_player)
@@ -45,4 +46,4 @@ func _on_player_collided(_damage_points: int, push_direction: Vector3) -> void:
 	collision_sound_player.position.x = push_direction.x * 10
 	print(collision_sound_player.position.x)
 
-	collision_sound_player.play()
+	# collision_sound_player.play()

@@ -1,0 +1,48 @@
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://dw5nlo0oxynxu"]
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_b22qg"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_oilum"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_7whgc"]
+resource_name = "Phaser"
+range_min_hz = 301.25
+range_max_hz = 1600.22
+rate_hz = 0.078
+feedback = 0.5
+depth = 0.2
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_07ypv"]
+resource_name = "LowPassFilter"
+cutoff_hz = 6969.0
+resonance = 0.33
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectCompressor_b22qg")
+bus/0/effect/0/enabled = false
+bus/1/name = &"Music"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/2/name = &"SFX"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectCompressor_oilum")
+bus/2/effect/0/enabled = true
+bus/3/name = &"SFX_Engine"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -0.272706
+bus/3/send = &"SFX"
+bus/3/effect/0/effect = SubResource("AudioEffectPhaser_7whgc")
+bus/3/effect/0/enabled = true
+bus/3/effect/1/effect = SubResource("AudioEffectLowPassFilter_07ypv")
+bus/3/effect/1/enabled = true

@@ -109,7 +109,7 @@ func _set_push_vector_and_implement_dead_zone(delta: float) -> void:
 
 func _handle_collision(collision: KinematicCollision3D) -> void:
 	if can_collide and collision:
-		SignalBus.player_collided.emit()
+		# SignalBus.player_collided.emit()
 		can_collide = false
 
 		var vec_to_collision := collision.get_position() - position
