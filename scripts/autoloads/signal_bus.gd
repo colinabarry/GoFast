@@ -19,6 +19,7 @@ signal speed_boost_collected(boost_amount: float)
 # signal item_collected
 signal game_paused
 signal game_resumed
+signal game_over
 
 # UI signals
 signal ui_play_pressed

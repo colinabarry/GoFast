@@ -34,6 +34,7 @@ func _ready() -> void:
 	SignalBus.player_velocity_changed.connect(_on_player_velocity_changed)
 	SignalBus.base_max_speed_changed.connect(_on_base_max_speed_changed)
 	SignalBus.player_collided.connect(_on_player_collided)
+	SignalBus.player_died.connect(_on_player_died)
 
 
 func _process(delta: float) -> void:
@@ -69,10 +70,18 @@ func _on_player_collided(_damage_points: int, _damaged_area_name: StringName) ->
 	death_sound_player.pitch_scale = 1.5
 	death_sound_player.volume_db = -15.0
 	death_sound_player.play()
-	# await collision_sound_player.finished
-	await death_sound_player.finished
-
-	death_sound_player.pitch_scale = 1.0
-	death_sound_player.volume_db = 0.0
+	await collision_sound_player.finished
 
 	can_collide = true
+
+
+func _on_player_died() -> void:
+	death_sound_player.playing = false
+	death_sound_player.pitch_scale = 1.0
+	death_sound_player.volume_db = 0.0
+	death_sound_player.play()
+	engine_sound_player.playing = false
+	await death_sound_player.finished
+
+	SignalBus.game_over.emit()
+	# get_parent().queue_free()

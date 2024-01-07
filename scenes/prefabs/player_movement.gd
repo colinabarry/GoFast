@@ -6,7 +6,6 @@ const mouse_move_factor := 25
 @onready var viewport := get_viewport() as Viewport
 @onready var viewport_size := viewport.get_visible_rect().size as Vector2
 @onready var mesh_container := %MeshContainer as Node3D
-@onready var anim_player := $AnimationPlayer as AnimationPlayer
 
 @onready var nose_marker := $MeshContainer/ShipMesh/NoseMarker as Marker3D
 
@@ -27,13 +26,18 @@ var push_vector := Vector3.ZERO
 
 var can_collide := true
 var is_boosting := false
+var is_alive := true
 
 
 func _ready() -> void:
 	SignalBus.speed_boost_collected.connect(_on_speed_boost_collected)
+	SignalBus.player_died.connect(_on_player_died)
 
 
 func _process(delta: float) -> void:
+	if !is_alive:
+		return
+
 	mouse_pos = viewport.get_mouse_position()
 	mouse_pos_norm = _get_mouse_pos_norm()
 	look_at_vec = _get_look_at_vec()
@@ -51,17 +55,7 @@ func _process(delta: float) -> void:
 	if collision:
 		_handle_collision(collision)
 
-	# var collided := move_and_slide()
-	# if collided:
-	# 	_handle_collision(get_last_slide_collision())
-
 	_clamp_velocity()
-
-	# if Input.is_action_just_pressed("move_dash_left"):
-	# 	anim_player.play("dash_left")
-
-	# if Input.is_action_just_pressed("move_dash_right"):
-	# 	anim_player.play("dash_right")
 
 	#
 
@@ -172,3 +166,10 @@ func _on_speed_boost_collected(boost_amount: float) -> void:
 
 	print("tween finished")
 	is_boosting = false
+
+
+func _on_player_died() -> void:
+	is_alive = false
+
+	velocity = Vector3.ZERO
+	mesh_container.queue_free()

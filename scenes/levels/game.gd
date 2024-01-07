@@ -4,6 +4,7 @@ extends Node3D
 func _ready() -> void:
 	SignalBus.game_paused.connect(_pause_game)
 	SignalBus.game_resumed.connect(_resume_game)
+	SignalBus.game_over.connect(_restart_game)
 
 	# SignalBus.game_paused.emit()
 
@@ -22,4 +23,7 @@ func _resume_game() -> void:
 
 
 func _restart_game() -> void:
-	get_tree().change_scene_to_file("scenes/levels/game.tscn")
+	var tree := get_tree() as SceneTree
+	print(tree)
+	if tree:
+		tree.reload_current_scene()

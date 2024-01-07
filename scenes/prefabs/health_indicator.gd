@@ -7,6 +7,8 @@ extends OmniLight3D
 var base_health_points := 2
 var health_points := base_health_points
 
+static var is_alive := true
+
 
 func _ready() -> void:
 	SignalBus.player_collided.connect(_on_player_collided)
@@ -17,7 +19,8 @@ func _on_player_collided(damage_points: int, damaged_area_name: StringName) -> v
 		return
 
 	health_points -= damage_points
-	if health_points <= 0:
+	if health_points <= 0 and is_alive:
+		is_alive = false
 		SignalBus.player_died.emit()
 
 	if health_points < base_health_points:
