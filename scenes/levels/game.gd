@@ -10,7 +10,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cut"):
-		get_tree().change_scene_to_file("scenes/levels/game.tscn")
+		_restart_game()
 
 
 func _pause_game() -> void:
@@ -19,3 +19,7 @@ func _pause_game() -> void:
 
 func _resume_game() -> void:
 	get_tree().paused = false
+
+
+func _restart_game() -> void:
+	get_tree().change_scene_to_file("scenes/levels/game.tscn")

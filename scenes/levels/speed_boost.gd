@@ -8,6 +8,8 @@ enum Power {
 
 @export var power := Power.SMALL
 
+@onready var audio_player := $AudioStreamPlayer3D as AudioStreamPlayer3D
+
 
 func _ready() -> void:
 	match power:
@@ -22,5 +24,9 @@ func _ready() -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		SignalBus.speed_boost_collected.emit(power)
-		print(str(power))
+
+		audio_player.pitch_scale = remap(power, Power.SMALL, Power.LARGE, 0.8, 1.2)
+		audio_player.play()
+		await audio_player.finished
+
 		queue_free()

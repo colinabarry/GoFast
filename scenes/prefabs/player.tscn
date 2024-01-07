@@ -1,77 +1,21 @@
-[gd_scene load_steps=26 format=3 uid="uid://crjrpemp8m0n1"]
+[gd_scene load_steps=23 format=3 uid="uid://crjrpemp8m0n1"]
 
 [ext_resource type="Script" path="res://scenes/prefabs/player_movement.gd" id="1_d0qr0"]
 [ext_resource type="PackedScene" uid="uid://b63embi87dgy2" path="res://scenes/prefabs/trail.tscn" id="2_5dm2c"]
 [ext_resource type="Script" path="res://scenes/prefabs/follow_camera.gd" id="2_g5jwr"]
+[ext_resource type="AudioStream" uid="uid://beb76sq62ovoa" path="res://assets/audio/sfx/horn_sound_loop.wav" id="4_5i4d8"]
 [ext_resource type="Script" path="res://scenes/prefabs/damage_area.gd" id="4_t1wwx"]
 [ext_resource type="Script" path="res://scenes/prefabs/player_audio.gd" id="5_thqj7"]
 [ext_resource type="AudioStream" uid="uid://bmc83sybhu7ms" path="res://assets/audio/sfx/engine_sound_loop_v2.wav" id="6_hd21x"]
-[ext_resource type="AudioStream" uid="uid://bj140bot17glr" path="res://assets/audio/sfx/CarHornHonk_BW.62180.wav" id="7_3ygq6"]
 [ext_resource type="AudioStream" uid="uid://f4m6lny3vp2u" path="res://assets/audio/sfx/ESM_GB_fx_foley_one_shot_rockbrk_mining_rocks_heavy_01_impact_destroy_material.wav" id="8_5dlm7"]
 [ext_resource type="Texture2D" uid="uid://bl8t7ufh0r7m8" path="res://assets/sprites/flashlight-cookie.jpg" id="8_ke01e"]
+[ext_resource type="Script" path="res://scenes/prefabs/player_health.gd" id="8_lso20"]
 [ext_resource type="AudioStream" uid="uid://diexrtus6tai5" path="res://assets/audio/sfx/ExplosionBlast_S08WA.111.wav" id="9_ng7t2"]
+[ext_resource type="Script" path="res://scenes/prefabs/health_indicator.gd" id="11_rnphr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ytlo6"]
-radius = 0.07769
+radius = 0.0440326
 height = 0.864781
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_tlluk"]
-margin = 0.1
-radius = 0.1
-
-[sub_resource type="Animation" id="Animation_qgjgs"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("WingCollision:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_8qghi"]
-resource_name = "dash_left"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("WingCollision:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(2, 0, 0), Vector3(2, 0, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_ei8p7"]
-resource_name = "dash_right"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("WingCollision:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-2, 0, 0), Vector3(-2, 0, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_iqo0l"]
-_data = {
-"RESET": SubResource("Animation_qgjgs"),
-"dash_left": SubResource("Animation_8qghi"),
-"dash_right": SubResource("Animation_ei8p7")
-}
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0kwg4"]
 radius = 0.1
@@ -211,27 +155,17 @@ script = ExtResource("1_d0qr0")
 [node name="PlayerAudio" type="Node3D" parent="."]
 script = ExtResource("5_thqj7")
 engine_sound = ExtResource("6_hd21x")
-horn_sound = ExtResource("7_3ygq6")
+horn_sound = ExtResource("4_5i4d8")
 collision_sound = ExtResource("8_5dlm7")
 death_sound = ExtResource("9_ng7t2")
 
 [node name="WingCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, -0.238263)
 shape = SubResource("CapsuleShape3D_ytlo6")
 
 [node name="BodyCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, -0.0144368, 0.0407839)
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, -0.0144368, 0.0328805)
 shape = SubResource("CapsuleShape3D_ytlo6")
-
-[node name="CoreCollision" type="CollisionShape3D" parent="."]
-visible = false
-shape = SubResource("SphereShape3D_tlluk")
-disabled = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_iqo0l")
-}
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 1.5, -1.5)
@@ -245,6 +179,7 @@ unique_name_in_owner = true
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.177497, 0)
 
 [node name="PlayerHealth" type="Node3D" parent="MeshContainer"]
+script = ExtResource("8_lso20")
 
 [node name="NoseArea" type="Area3D" parent="MeshContainer/PlayerHealth"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.78368e-08, 0.159683, -0.432803)
@@ -288,23 +223,29 @@ shadow_enabled = true
 spot_range = 500.0
 spot_angle = 25.0
 
-[node name="HealthIndicatorLeft" type="OmniLight3D" parent="MeshContainer/Lights"]
+[node name="HealthIndicatorLeft" type="OmniLight3D" parent="MeshContainer/Lights" node_paths=PackedStringArray("health_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.425449, 0.115871, 0.238119)
 light_color = Color(0.25098, 1, 1, 1)
 light_energy = 0.25
 omni_range = 0.2
+script = ExtResource("11_rnphr")
+health_area = NodePath("../../PlayerHealth/LeftWingArea")
 
-[node name="HealthIndicatorRight" type="OmniLight3D" parent="MeshContainer/Lights"]
+[node name="HealthIndicatorRight" type="OmniLight3D" parent="MeshContainer/Lights" node_paths=PackedStringArray("health_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.425, 0.116, 0.238)
 light_color = Color(0.25098, 1, 1, 1)
 light_energy = 0.25
 omni_range = 0.2
+script = ExtResource("11_rnphr")
+health_area = NodePath("../../PlayerHealth/RightWingArea")
 
-[node name="HealthIndicatorCenter" type="OmniLight3D" parent="MeshContainer/Lights"]
+[node name="HealthIndicatorNose" type="OmniLight3D" parent="MeshContainer/Lights" node_paths=PackedStringArray("health_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26316e-08, 0.417041, 0.0935109)
 light_color = Color(0.25098, 1, 1, 1)
 light_energy = 0.25
 omni_range = 0.2
+script = ExtResource("11_rnphr")
+health_area = NodePath("../../PlayerHealth/NoseArea")
 
 [node name="ShipMesh" type="MeshInstance3D" parent="MeshContainer"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

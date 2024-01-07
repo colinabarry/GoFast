@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bymt1dg3scx0t"]
+[gd_scene load_steps=7 format=3 uid="uid://bymt1dg3scx0t"]
 
 [ext_resource type="Script" path="res://scenes/levels/speed_boost.gd" id="1_6sl6j"]
+[ext_resource type="AudioStream" uid="uid://iibnjsl754c0" path="res://assets/audio/sfx/ESM_Epic_Achievement_Speed_Fade_2Pick_Up_Robotic_Technology_Hi_Tech_Game_Tone_Science_UFO_Space_Processed_Glitch_Hybrid_Sci_fi.wav" id="2_7vxfe"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_o3sxv"]
 radius = 1.0
@@ -55,5 +56,8 @@ theme_override_font_sizes/font_size = 32
 text = ">>>"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_7vxfe")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

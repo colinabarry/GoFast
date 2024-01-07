@@ -1,7 +1,7 @@
 extends Node
 
 # Player signals
-signal player_collided(damage_points: int, push_direction: Vector3)
+signal player_collided(damage_points: int, damaged_area_name: StringName)
 signal player_died
 signal player_position_changed(new_position: Vector3)
 signal player_velocity_changed(new_velocity: Vector3)

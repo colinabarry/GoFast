@@ -37,6 +37,10 @@ func _on_base_max_speed_changed(new_base_max_speed: float) -> void:
 func _on_current_max_speed_changed(new_current_max_speed: float) -> void:
 	current_max_speed = new_current_max_speed
 
-# func _on_max_velocity_changed(new_max_velocity: Vector3) -> void:
+
+func _on_speed_boost_collected(boost_amount: float) -> void:
+	score += boost_amount
+
+	# func _on_max_velocity_changed(new_max_velocity: Vector3) -> void:
 # 	max_speed = new_max_velocity.z
 # 	# print(max_speed)

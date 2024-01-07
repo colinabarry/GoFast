@@ -15,7 +15,7 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		return
 
-	SignalBus.player_collided.emit(damage_points, position)
+	SignalBus.player_collided.emit(damage_points, name)
 	var new_smoke := smoke_node.instantiate()
 	add_child(new_smoke)
 

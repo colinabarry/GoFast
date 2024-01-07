@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://cdu7vuimuhxai"]
+[gd_scene load_steps=15 format=3 uid="uid://cdu7vuimuhxai"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_4oofb"]
+[ext_resource type="Script" path="res://scenes/levels/sun.gd" id="2_adjjt"]
 [ext_resource type="PackedScene" uid="uid://crjrpemp8m0n1" path="res://scenes/prefabs/player.tscn" id="2_rdnfx"]
 [ext_resource type="Script" path="res://scenes/levels/world.gd" id="3_2aell"]
 [ext_resource type="Script" path="res://scenes/ui/ui_wrangler.gd" id="4_2ioxq"]
@@ -20,12 +21,19 @@ sky_material = SubResource("ProceduralSkyMaterial_7vhnt")
 
 [sub_resource type="Environment" id="Environment_cb7j1"]
 background_mode = 2
+background_energy_multiplier = 0.75
 sky = SubResource("Sky_yncry")
 tonemap_mode = 3
+tonemap_exposure = 1.1
+tonemap_white = 0.75
 ssao_radius = 13.73
 glow_enabled = true
 glow_normalized = true
-glow_intensity = 0.6
+glow_intensity = 0.75
+fog_light_color = Color(0.803922, 0.294118, 0, 1)
+fog_density = 0.001
+fog_aerial_perspective = 0.2
+fog_sky_affect = 0.33
 volumetric_fog_density = 0.0
 
 [node name="Game" type="Node3D"]
@@ -35,14 +43,15 @@ script = ExtResource("1_4oofb")
 environment = SubResource("Environment_cb7j1")
 
 [node name="Sun" type="Node3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, -0.998219, 0.0596548, 0, -0.0596548, -0.998219, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.718126, 0.695913, 0, -0.695913, 0.718126, 0, 0, 0)
+script = ExtResource("2_adjjt")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment/Sun"]
 transform = Transform3D(0.619731, 0.585578, 0.522525, 0.31316, -0.795004, 0.519519, 0.719628, -0.158328, -0.676068, -2.58896, 12.353, 6.33465)
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_rdnfx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.9871, 0.603879, -6.16116)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.61229, 16.7058, -6.16116)
 
 [node name="World" type="Node3D" parent="."]
 script = ExtResource("3_2aell")
