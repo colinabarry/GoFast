@@ -1,4 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8v077ecxbvow"]
+[gd_scene load_steps=8 format=3 uid="uid://b8v077ecxbvow"]
+
+[ext_resource type="Script" path="res://scenes/prefabs/smoke_trail.gd" id="1_ox4wg"]
 
 [sub_resource type="Gradient" id="Gradient_ah6tn"]
 interpolation_mode = 2
@@ -38,3 +40,4 @@ noise_scale = 0.25
 size = 0.2
 update_interval = 0.01
 transform = Transform3D(0.298997, 0, -1.77636e-15, 0, 0.298997, 0, 1.77636e-15, 0, 0.298997, 0.0029684, 0.0686383, -0.0300182)
+script = ExtResource("1_ox4wg")

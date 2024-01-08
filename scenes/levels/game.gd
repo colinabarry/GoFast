@@ -6,7 +6,9 @@ func _ready() -> void:
 	SignalBus.game_resumed.connect(_resume_game)
 	SignalBus.game_over.connect(_restart_game)
 
-	# SignalBus.game_paused.emit()
+	SignalBus.ui_restart_pressed.connect(_restart_game)
+
+	SignalBus.game_paused.emit()
 
 
 func _process(_delta: float) -> void:

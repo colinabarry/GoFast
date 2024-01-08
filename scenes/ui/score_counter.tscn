@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://deapt4wltrt7m"]
+[gd_scene load_steps=3 format=3 uid="uid://deapt4wltrt7m"]
 
 [ext_resource type="Script" path="res://scenes/ui/score_label.gd" id="1_2qbar"]
+[ext_resource type="Script" path="res://scenes/ui/score_multiplier_label.gd" id="2_6cvxu"]
 
 [node name="ScoreCounter" type="MarginContainer"]
 anchors_preset = 10
@@ -12,17 +13,31 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="ScoreTitle" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 42
-text = "Score:  "
+text = "Score: "
 
-[node name="Label2" type="Label" parent="HBoxContainer"]
+[node name="ScoreLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 42
 text = "0"
 script = ExtResource("1_2qbar")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ScoreMultiplierLabel" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.211765, 0.898039, 0.976471, 1)
+theme_override_font_sizes/font_size = 28
+text = "x0.00"
+script = ExtResource("2_6cvxu")

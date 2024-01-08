@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7cds454lvf6s"]
+[gd_scene load_steps=7 format=3 uid="uid://c7cds454lvf6s"]
 
 [ext_resource type="Script" path="res://scenes/ui/pause_menu.gd" id="1_mtch2"]
 [ext_resource type="PackedScene" uid="uid://dwa40tlr48lqh" path="res://scenes/ui/components/menu_button.tscn" id="2_5tc3m"]
 [ext_resource type="Texture2D" uid="uid://lnq8odp6spvs" path="res://assets/icons/forward.png" id="3_rq3no"]
 [ext_resource type="Texture2D" uid="uid://br6p32g1et21v" path="res://assets/icons/gear.png" id="4_4gwef"]
+[ext_resource type="Texture2D" uid="uid://bq1nrr67qoqgm" path="res://assets/icons/return.png" id="4_b8u2q"]
 [ext_resource type="Texture2D" uid="uid://d288ixtejnl2t" path="res://assets/icons/exitRight.png" id="5_83vpa"]
 
 [node name="PauseMenu" type="ColorRect"]
@@ -28,10 +29,33 @@ custom_minimum_size = Vector2(326, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BestScoreTitle" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Best Score: "
+
+[node name="BestScore" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="Spacer" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="Resume" parent="CenterContainer/VBoxContainer" instance=ExtResource("2_5tc3m")]
 layout_mode = 2
 text = "Resume"
 icon = ExtResource("3_rq3no")
+expand_icon = true
+
+[node name="Restart" parent="CenterContainer/VBoxContainer" instance=ExtResource("2_5tc3m")]
+layout_mode = 2
+text = "Restart"
+icon = ExtResource("4_b8u2q")
 expand_icon = true
 
 [node name="Settings" parent="CenterContainer/VBoxContainer" instance=ExtResource("2_5tc3m")]

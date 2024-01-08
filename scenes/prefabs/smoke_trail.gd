@@ -1,0 +1,1 @@
+class_name SmokeTrail extends TrailEmitter
